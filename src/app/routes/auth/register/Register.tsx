@@ -7,22 +7,35 @@ import {
   Input,
   Button,
 } from "@mui/joy";
-import { useState } from "react";
-import Link from "@mui/joy/Link";
+import { useState, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router";
+import useAuth from "../../../../contexts/auth/useAuth";
 import { createNewUser } from "../../../../firebase/auth/newUser";
 
 export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      navigate("/");
+    }
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const user = await createNewUser(email, password);
       setMessage(`User created successfully: ${user.email}`);
-    } catch (error: any) {
-      setMessage(`Error: ${error.message}`);
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setMessage(`Error: ${error.message}`);
+      } else {
+        setMessage("An unknown error occurred.");
+      }
     }
   };
   return (
@@ -31,10 +44,10 @@ export default function Register() {
         <Sheet
           sx={{
             width: 300,
-            mx: "auto", // margin left & right
-            my: 4, // margin top & bottom
-            py: 3, // padding top & bottom
-            px: 2, // padding left & right
+            mx: "auto",
+            my: 4,
+            py: 3,
+            px: 2,
             display: "flex",
             flexDirection: "column",
             gap: 2,
@@ -52,7 +65,6 @@ export default function Register() {
           <FormControl>
             <FormLabel>Email</FormLabel>
             <Input
-              // html input attribute
               name="email"
               type="email"
               placeholder="johndoe@email.com"
@@ -74,7 +86,11 @@ export default function Register() {
             Sign up
           </Button>
           <Typography
-            endDecorator={<Link href="/login">Sign up</Link>}
+            endDecorator={
+              <NavLink to={"/login"} className="text-blue-700">
+                Log in
+              </NavLink>
+            }
             fontSize="sm"
             sx={{ alignSelf: "center" }}
           >
