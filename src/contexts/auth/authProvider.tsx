@@ -2,14 +2,13 @@ import { onAuthStateChanged, User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "../../firebase/firebase";
 import AuthContext from "./authContext";
+import { AuthUser } from "../../interfaces/interfaces";
 
-export interface AuthUser {
-  displayName: string | null;
-  email: string | null;
-  uid: string;
-}
-
-export default function AuthProvider({ children }: { children: React.ReactNode }) {
+export default function AuthProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [user, setUser] = useState<AuthUser | null>(null);
 
   useEffect(() => {
@@ -27,5 +26,9 @@ export default function AuthProvider({ children }: { children: React.ReactNode }
     return () => unsubscribe();
   }, []);
 
-  return <AuthContext.Provider value={{ user, setUser }}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ user, setUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
 }

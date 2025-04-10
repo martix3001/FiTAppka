@@ -1,5 +1,6 @@
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase.ts";
+import { createUserDatabase } from "../db/createUserDatabase.ts";
 
 /**
  * Function to create a new user with email and password.
@@ -10,7 +11,8 @@ import { auth } from "../firebase.ts";
 export function createNewUser(email: string, password: string) {
   return createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
-      return userCredential.user;
+      const user = userCredential.user;
+      return createUserDatabase(user.uid, { email: user.email }).then(() => user);
     })
     .catch((error) => {
       throw new Error(`Error (${error.code}): ${error.message}`);
