@@ -1,6 +1,7 @@
 import { Outlet, useNavigate } from "react-router";
 import useAuth from "../../contexts/auth/useAuth";
 import { logoutUser } from "../../firebase/auth/logoutUser";
+import PWABadge from "../../components/PWABadge";
 
 export default function DashboardLayout() {
   const { user } = useAuth();
@@ -82,6 +83,7 @@ export default function DashboardLayout() {
       <main className="flex-1 p-4">
         <Outlet />
       </main>
+      <PWABadge />
     </div>
   );
 }

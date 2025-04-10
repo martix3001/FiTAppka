@@ -1,4 +1,4 @@
-import { NavLink } from "react-router";
+import { NavLink, Outlet } from "react-router";
 
 export default function MealPlan() {
   return (
@@ -7,6 +7,7 @@ export default function MealPlan() {
       <NavLink to="add" className="text-blue-500">
         Add Meal Plan
       </NavLink>
+      <Outlet />
     </div>
   );
 }
