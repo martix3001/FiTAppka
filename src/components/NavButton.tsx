@@ -4,7 +4,7 @@ interface PageNavigationButtonProps {
   direction: "next" | "previous";
   //Ścieżka do strony, do której ma prowadzić przycisk
   // Można użyć np. "/page2" lub "/page3"
-  to: string; 
+  to: string;
 }
 
 export default function PageNavigationButton({

@@ -1,5 +1,3 @@
-// src/App.tsx
-
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router";
 import AuthProvider from "../contexts/auth/authProvider";
 import AddWater from "./routes/AddWater";

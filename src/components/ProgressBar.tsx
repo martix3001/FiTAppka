@@ -8,7 +8,12 @@ interface ProgressBarProps {
   color: string; // Kolor paska postępu
 }
 
-export default function ProgressBar({ icon, value, maxValue, color }: ProgressBarProps) {
+export default function ProgressBar({
+  icon,
+  value,
+  maxValue,
+  color,
+}: ProgressBarProps) {
   const percentage = Math.min((value / maxValue) * 100, 100); // Obliczenie procentu
 
   return (
@@ -25,7 +30,9 @@ export default function ProgressBar({ icon, value, maxValue, color }: ProgressBa
           ></div>
         </div>
         <div className="flex justify-between mt-1 text-sm text-gray-700">
-          <span>{value} / {maxValue}</span>
+          <span>
+            {value} / {maxValue}
+          </span>
           <span>{Math.round(percentage)}%</span>
         </div>
       </div>

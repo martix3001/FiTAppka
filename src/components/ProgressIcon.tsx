@@ -6,7 +6,11 @@ interface ProgressIconProps {
   color?: string; // Kolor ikony (domyślnie czarny)
 }
 
-export default function ProgressIcon({ icon, size = 48, color = "black" }: ProgressIconProps) {
+export default function ProgressIcon({
+  icon,
+  size = 48,
+  color = "black",
+}: ProgressIconProps) {
   return (
     <div
       className="flex items-center justify-center"

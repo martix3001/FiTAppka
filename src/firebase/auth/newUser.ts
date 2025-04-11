@@ -12,7 +12,9 @@ export function createNewUser(email: string, password: string) {
   return createUserWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       const user = userCredential.user;
-      return createUserDatabase(user.uid, { email: user.email }).then(() => user);
+      return createUserDatabase(user.uid, { email: user.email }).then(
+        () => user
+      );
     })
     .catch((error) => {
       throw new Error(`Error (${error.code}): ${error.message}`);

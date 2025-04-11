@@ -1,5 +1,3 @@
 export default function MealPlanAdd() {
-    return (
-        <h1>Meal plan add</h1>
-    )
-};
+  return <h1>Meal plan add</h1>;
+}
