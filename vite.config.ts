@@ -7,7 +7,17 @@ import tailwindcss from "@tailwindcss/vite";
 export default defineConfig({
   plugins: [
     react(),
-    tailwindcss(),
+    tailwindcss({
+      config: {
+        theme: {
+          extend: {
+            colors: {
+              'header-green': '#52AB9E', // Add custom color
+            },
+          },
+        },
+      },
+    }),
     VitePWA({
       registerType: "prompt",
       injectRegister: false,

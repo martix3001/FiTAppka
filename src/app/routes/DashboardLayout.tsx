@@ -2,6 +2,8 @@ import { Outlet, useNavigate } from "react-router";
 import useAuth from "../../contexts/auth/useAuth";
 import { logoutUser } from "../../firebase/auth/logoutUser";
 import PWABadge from "../../components/PWABadge";
+import { Plus, UserRoundCog } from "lucide-react";
+import ActionTile from "../../components/ActionTile";
 
 export default function DashboardLayout() {
   const { user } = useAuth();
@@ -23,7 +25,28 @@ export default function DashboardLayout() {
   return (
     <div className="min-h-screen flex flex-col">
       {/* Header */}
-      <header className="bg-gray-800 text-white p-4 flex justify-between items-center">
+
+      <div className="bg-[#52AB9E] text-white p-4 flex justify-between items-center">
+        <div className="">
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 px-4 py-2 rounded hover:bg-red-600 transition"
+          >
+            Logout
+          </button>
+        </div>
+        <div className="font-extrabold text-gray-600 text-5xl">FitApp</div>
+        <div>
+          <UserRoundCog
+            onClick={() => navigate("/dashboard/settings")}
+            className="hover:cursor-pointer"
+            size={35}
+            color="grey"
+          />
+        </div>
+      </div>
+
+      {/* <header className="bg-gray-800 text-white p-4 flex justify-between items-center">
         <span>Logged in as: {user.email}</span>
         <button
           onClick={handleLogout}
@@ -31,7 +54,7 @@ export default function DashboardLayout() {
         >
           Logout
         </button>
-      </header>
+      </header> */}
 
       {/* Navigation Buttons for Testing */}
       <nav className="bg-gray-100 p-4 flex gap-4">
@@ -81,6 +104,11 @@ export default function DashboardLayout() {
 
       {/* Main Content */}
       <main className="flex-1 p-4">
+        <ActionTile
+          icon={<Plus color="black" size={55} className="self-center" />}
+          label={"Meal plan"}
+          onClick={() => navigate("/dashboard/meal-plan")}
+        />
         <Outlet />
       </main>
       <PWABadge />
