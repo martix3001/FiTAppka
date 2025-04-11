@@ -1,5 +1,5 @@
 import { doc, getDoc } from "firebase/firestore";
-import { Droplet, Pizza, Footprints, Plus } from "lucide-react";
+import { Droplet, Pizza, Footprints, Plus, Users, Camera } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import ActionTile from "../../components/ActionTile";
@@ -109,7 +109,7 @@ export default function Home() {
           onClick={() => navigate("/dashboard/meal-plan")}
         />
         <ActionTile
-          icon={<Plus color="black" size={30} className="self-center" />}
+          icon={<Droplet color="black" size={30} className="self-center" />}
           label={"Add Water"}
           onClick={() => navigate("/dashboard/add-water")}
         />
@@ -119,19 +119,19 @@ export default function Home() {
           onClick={() => navigate("/dashboard/register-product")}
         />
         <ActionTile
-          icon={<Plus color="black" size={30} className="self-center" />}
-          label={"Exercise"}
-          onClick={() => navigate("/dashboard/exercise")}
+          icon={<Users color="black" size={30} className="self-center" />}
+          label={"About"}
+          onClick={() => navigate("/dashboard/about")}
         />
         <ActionTile
-          icon={<Plus color="black" size={30} className="self-center" />}
+          icon={<Camera color="black" size={30} className="self-center" />}
           label={"Progress Gallery"}
           onClick={() => navigate("/dashboard/progress-gallery")}
         />
         <ActionTile
-          icon={<Plus color="black" size={30} className="self-center" />}
-          label={"Settings"}
-          onClick={() => navigate("/dashboard/settings")}
+          icon={""}
+          label={""}
+          onClick={() => navigate("/dashboard")}
         />
       </div>
     </div>
