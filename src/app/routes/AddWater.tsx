@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { GlassWater } from "lucide-react"; 
+import { useNavigate } from "react-router";
 
 export default function AddWater() {
   const [waterIntake, setWaterIntake] = useState(0);
-  const [inputValue, setInputValue] = useState("");
+  const navigate = useNavigate();
 
-  // Reset water intake daily (example: at midnight)
+  // Reset water intake daily
   useEffect(() => {
     const now = new Date();
     const millisUntilMidnight =
@@ -18,40 +20,21 @@ export default function AddWater() {
     return () => clearTimeout(resetTimer);
   }, [waterIntake]);
 
-  const handleAddWater = () => {
-    const ml = parseInt(inputValue, 10);
-    if (!isNaN(ml) && ml > 0) {
-      setWaterIntake(waterIntake + ml);
-      setInputValue("");
-    } else {
-      alert("Please enter a valid number of milliliters.");
-    }
+  const handleAddGlass = () => {
+    const glassSize = 200;
+    setWaterIntake(waterIntake + glassSize);
+    navigate("/dashboard");
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4">
-      <header className="bg-blue-500 w-full py-4 text-center">
-        <h1 className="text-white text-lg font-bold">Add Water</h1>
-      </header>
-      <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm text-center">
-        <h2 className="text-xl font-semibold text-gray-800 mb-4">
-          Track Your Daily Water Intake
-        </h2>
-        <p className="text-gray-600 mb-6">
-          Today's Water Intake: <span className="font-bold">{waterIntake} ml</span>
-        </p>
-        <input
-          type="number"
-          placeholder="Enter ml"
-          value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
-          className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-blue-500 text-black"
-        />
+      <div className="flex flex-col items-center bg-white p-6 rounded-lg shadow-md w-full max-w-sm text-center">
+        <GlassWater className="w-24 h-24 text-blue-500 mb-6" />
         <button
-          onClick={handleAddWater}
-          className="w-full bg-blue-500 text-white py-3 rounded-lg font-semibold hover:bg-blue-600 transition"
+          onClick={handleAddGlass}
+          className="bg-teal-500 text-white py-3 px-6 rounded-lg font-semibold hover:bg-teal-600 transition"
         >
-          Add Water
+          Dodaj szklankę wody
         </button>
       </div>
     </div>
