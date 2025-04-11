@@ -22,7 +22,7 @@ export default function DashboardLayout() {
   }
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col fixed w-full">
       <div className="bg-[#52AB9E] text-white p-4 flex justify-between items-center">
         <div className="">
           <button

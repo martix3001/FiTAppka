@@ -25,7 +25,6 @@ export default function ProgressGallery() {
           day: "numeric",
         });
 
-        // Simulated user data (replace with actual data from your database)
         const userWeight = "70kg";
 
         const newPhoto: PhotoDetails = {
@@ -108,7 +107,7 @@ export default function ProgressGallery() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4 gap-4">
       {/* Header */}
       <header className="bg-teal-500 w-full py-4 text-center">
         <h1 className="text-white text-lg font-bold">Fit App - Progress Gallery</h1>

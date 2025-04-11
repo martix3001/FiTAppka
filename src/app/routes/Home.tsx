@@ -43,9 +43,9 @@ export default function Home() {
   });
 
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col h-svh justify-around">
       {/* Progress Bars Container */}
-      <div className="flex flex-col gap-12 mt-10 p-4 mb-10">
+      <div className="flex flex-col gap-12  p-4">
         {/* Water Progress */}
         <div className="flex items-center gap-4">
           <Droplet size={40} />
