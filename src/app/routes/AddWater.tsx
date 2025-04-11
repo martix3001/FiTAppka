@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { GlassWater } from "lucide-react"; 
+import { useState, useEffect } from "react";
+import { GlassWater } from "lucide-react";
 import { useNavigate } from "react-router";
+import { addWater } from "../../firebase/db/addWater";
+import useAuth from "../../contexts/auth/useAuth";
 
 export default function AddWater() {
   const [waterIntake, setWaterIntake] = useState(0);
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   // Reset water intake daily
   useEffect(() => {
@@ -22,8 +25,13 @@ export default function AddWater() {
 
   const handleAddGlass = () => {
     const glassSize = 200;
-    setWaterIntake(waterIntake + glassSize);
-    navigate("/dashboard");
+    if (user) {
+      addWater(user.uid, glassSize);
+      setWaterIntake(waterIntake + glassSize);
+      navigate("/dashboard");
+    } else {
+      console.log("No user logged");
+    }
   };
 
   return (

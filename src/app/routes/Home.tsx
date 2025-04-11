@@ -13,6 +13,10 @@ export default function Home() {
   const [mealProgress, setMealProgress] = useState(0);
   const [stepsProgress, setStepsProgress] = useState(0);
 
+  const waterMax = 2000;
+  const mealMax = 2500;
+  const stepsMax = 11000;
+
   useEffect(() => {
     const fetchData = async () => {
       if (user) {
@@ -36,57 +40,68 @@ export default function Home() {
     };
 
     fetchData();
-  }, []);
+  });
 
   return (
-    <div className="flex flex-col justify-between">
-      <div>
-        <div className="flex flex-col gap-8 p-4 flex-grow overflow-y-auto">
-          {/* Water Progress */}
-          <div className="flex items-center gap-4">
-            <Droplet size={40} />
-            <div className="flex-1 bg-gray-200 rounded-full h-6 relative">
-              <div
-                className="bg-blue-500 h-6 rounded-full"
-                style={{ width: `${(waterProgress / 2000) * 100}%` }}
-              ></div>
-              <span className="absolute inset-0 flex justify-center items-center text-black font-bold">
-                {`${waterProgress} / 2000 ml`}
-              </span>
-            </div>
+    <div className="flex flex-col h-full">
+      {/* Progress Bars Container */}
+      <div className="flex flex-col gap-12 mt-10 p-4 mb-10">
+        {/* Water Progress */}
+        <div className="flex items-center gap-4">
+          <Droplet size={40} />
+          <div className="flex-1 bg-gray-200 rounded-full h-6 relative">
+            <div
+              className="bg-blue-500 h-6 rounded-full"
+              style={{
+                width: `${Math.min((waterProgress / waterMax) * 100, 100)}%`,
+              }}
+            ></div>
+            <span className="absolute inset-0 flex justify-center items-center text-black font-bold">
+              {waterProgress >= waterMax
+                ? "Done for today!"
+                : `${waterProgress} / ${waterMax} ml`}
+            </span>
           </div>
+        </div>
 
-          {/* Meal Progress */}
-          <div className="flex items-center gap-4">
-            <Pizza size={40} />
-            <div className="flex-1 bg-gray-200 rounded-full h-6 relative">
-              <div
-                className="bg-green-500 h-6 rounded-full"
-                style={{ width: `${(mealProgress / 2500) * 100}%` }}
-              ></div>
-              <span className="absolute inset-0 flex justify-center items-center text-black font-bold">
-                {`${mealProgress} / 2500 kcal`}
-              </span>
-            </div>
+        {/* Meal Progress */}
+        <div className="flex items-center gap-4">
+          <Pizza size={40} />
+          <div className="flex-1 bg-gray-200 rounded-full h-6 relative">
+            <div
+              className="bg-green-500 h-6 rounded-full"
+              style={{
+                width: `${Math.min((mealProgress / mealMax) * 100, 100)}%`,
+              }}
+            ></div>
+            <span className="absolute inset-0 flex justify-center items-center text-black font-bold">
+              {mealProgress >= mealMax
+                ? "Done for today!"
+                : `${mealProgress} / ${mealMax} kcal`}
+            </span>
           </div>
+        </div>
 
-          {/* Steps Progress */}
-          <div className="flex items-center gap-4">
-            <Footprints size={40} />
-            <div className="flex-1 bg-gray-200 rounded-full h-6 relative">
-              <div
-                className="bg-yellow-500 h-6 rounded-full"
-                style={{ width: `${(stepsProgress / 11000) * 100}%` }}
-              ></div>
-              <span className="absolute inset-0 flex justify-center items-center text-black font-bold">
-                {`${stepsProgress} / 11000 steps`}
-              </span>
-            </div>
+        {/* Steps Progress */}
+        <div className="flex items-center gap-4">
+          <Footprints size={40} />
+          <div className="flex-1 bg-gray-200 rounded-full h-6 relative">
+            <div
+              className="bg-yellow-500 h-6 rounded-full"
+              style={{
+                width: `${Math.min((stepsProgress / stepsMax) * 100, 100)}%`,
+              }}
+            ></div>
+            <span className="absolute inset-0 flex justify-center items-center text-black font-bold">
+              {stepsProgress >= stepsMax
+                ? "Done for today!"
+                : `${stepsProgress} / ${stepsMax} steps`}
+            </span>
           </div>
         </div>
       </div>
 
-      {/* Feature Buttons Section */}
+      {/* Feature Buttons Container */}
       <div className="flex flex-wrap justify-center items-center gap-6 py-4 bg-gray-100">
         <ActionTile
           icon={<Plus color="black" size={30} className="self-center" />}

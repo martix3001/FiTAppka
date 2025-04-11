@@ -100,8 +100,10 @@ export default function DashboardLayout() {
       </nav> */}
 
       {/* Main Content */}
+      <main className="">
+        <Outlet />
+      </main>
 
-      <Outlet />
       <PWABadge />
     </div>
   );
