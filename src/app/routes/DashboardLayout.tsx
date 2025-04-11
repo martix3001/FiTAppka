@@ -2,8 +2,7 @@ import { Outlet, useNavigate } from "react-router";
 import useAuth from "../../contexts/auth/useAuth";
 import { logoutUser } from "../../firebase/auth/logoutUser";
 import PWABadge from "../../components/PWABadge";
-import { Plus, UserRoundCog } from "lucide-react";
-import ActionTile from "../../components/ActionTile";
+import { UserRoundCog } from "lucide-react";
 
 export default function DashboardLayout() {
   const { user } = useAuth();
@@ -19,13 +18,11 @@ export default function DashboardLayout() {
   };
 
   if (!user) {
-    return null; // Optionally, redirect to login if user is not authenticated
+    return null;
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
-      {/* Header */}
-
+    <div className="flex flex-col">
       <div className="bg-[#52AB9E] text-white p-4 flex justify-between items-center">
         <div className="">
           <button
@@ -41,7 +38,7 @@ export default function DashboardLayout() {
             onClick={() => navigate("/dashboard/settings")}
             className="hover:cursor-pointer"
             size={35}
-            color="grey"
+            color="white"
           />
         </div>
       </div>
@@ -57,7 +54,7 @@ export default function DashboardLayout() {
       </header> */}
 
       {/* Navigation Buttons for Testing */}
-      <nav className="bg-gray-100 p-4 flex gap-4">
+      {/* <nav className="bg-gray-100 p-4 flex gap-4">
         <button
           onClick={() => navigate("/dashboard/add-water")}
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
@@ -100,17 +97,11 @@ export default function DashboardLayout() {
         >
           Settings
         </button>
-      </nav>
+      </nav> */}
 
       {/* Main Content */}
-      <main className="flex-1 p-4">
-        <ActionTile
-          icon={<Plus color="black" size={55} className="self-center" />}
-          label={"Meal plan"}
-          onClick={() => navigate("/dashboard/meal-plan")}
-        />
-        <Outlet />
-      </main>
+
+      <Outlet />
       <PWABadge />
     </div>
   );

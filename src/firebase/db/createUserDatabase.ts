@@ -18,6 +18,9 @@ export async function createUserDatabase(
   try {
     const userDocRef = doc(db, "users", userId);
     await setDoc(userDocRef, {
+      water: 0,
+      calories: 0,
+      steps: 0,
       ...userData,
       createdAt: new Date().toISOString(),
     });

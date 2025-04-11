@@ -15,6 +15,7 @@ import MealPlanAdd from "./routes/MealPlanAdd";
 import ExerciseAdd from "./routes/ExerciseAdd";
 import ExerciseEdit from "./routes/ExerciseEdit";
 import useAuth from "../contexts/auth/useAuth";
+import Home from "./routes/Home";
 
 const RootRedirect = () => {
   const { user } = useAuth();
@@ -42,22 +43,15 @@ const router = createBrowserRouter([
         path: "/dashboard",
         element: <DashboardLayout />,
         children: [
+          { index: true, element: <Home /> }, // Default route for /dashboard
           { path: "add-water", element: <AddWater /> },
           { path: "register-product", element: <RegisterProduct /> },
-          {
-            path: "meal-plan",
-            element: <MealPlan />,
-            children: [{ path: "add", element: <MealPlanAdd /> }],
-          },
+          { path: "meal-plan", element: <MealPlan /> },
+          { path: "meal-plan/add", element: <MealPlanAdd /> },
           { path: "about", element: <About /> },
-          {
-            path: "exercise",
-            element: <Exercise />,
-            children: [
-              { path: "add", element: <ExerciseAdd /> },
-              { path: "edit", element: <ExerciseEdit /> },
-            ],
-          },
+          { path: "exercise", element: <Exercise /> },
+          { path: "exercise/add", element: <ExerciseAdd /> },
+          { path: "exercise/edit", element: <ExerciseEdit /> },
           { path: "progress-gallery", element: <ProgressGallery /> },
           { path: "settings", element: <Settings /> },
         ],
