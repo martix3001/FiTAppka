@@ -12,8 +12,6 @@ import About from "./routes/About";
 import ProgressGallery from "./routes/ProgressGallery";
 import Settings from "./routes/Settings";
 import MealPlanAdd from "./routes/MealPlanAdd";
-import ExerciseAdd from "./routes/ExerciseAdd";
-import ExerciseEdit from "./routes/ExerciseEdit";
 import useAuth from "../contexts/auth/useAuth";
 import Home from "./routes/Home";
 
@@ -50,8 +48,6 @@ const router = createBrowserRouter([
           { path: "meal-plan/add", element: <MealPlanAdd /> },
           { path: "about", element: <About /> },
           { path: "exercise", element: <Exercise /> },
-          { path: "exercise/add", element: <ExerciseAdd /> },
-          { path: "exercise/edit", element: <ExerciseEdit /> },
           { path: "progress-gallery", element: <ProgressGallery /> },
           { path: "settings", element: <Settings /> },
         ],

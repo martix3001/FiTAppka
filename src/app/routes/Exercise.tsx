@@ -123,11 +123,11 @@ export default function Exercise() {
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-2xl font-bold mb-4">Exercise Page</h1>
+    <div className="p-4 bg-[#F5F5F5] min-h-screen">
+      <h1 className="text-2xl font-bold mb-4 text-teal-600">Exercise Page</h1>
       <button
         onClick={() => openModal("add")}
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+        className="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition"
       >
         Add Exercise
       </button>
@@ -135,11 +135,11 @@ export default function Exercise() {
         {exercises.map((exercise) => (
           <div
             key={exercise.id}
-            className="p-4 border rounded shadow flex justify-between items-center"
+            className="p-4 border rounded shadow flex justify-between items-center bg-white"
           >
             <div>
-              <h2 className="text-lg font-semibold">{exercise.name}</h2>
-              <p className="text-sm text-gray-600">Duration: {exercise.duration} min</p>
+              <h2 className="text-lg font-semibold text-teal-700">{exercise.name}</h2>
+              <p className="text-sm text-teal-600">Duration: {exercise.duration} min</p>
             </div>
             <div className="flex gap-2">
               <button
@@ -150,7 +150,7 @@ export default function Exercise() {
               </button>
               <button
                 onClick={() => openModal("edit", exercise)}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                className="bg-teal-500 text-white px-4 py-2 rounded hover:bg-teal-600 transition"
               >
                 Edit
               </button>
@@ -167,10 +167,10 @@ export default function Exercise() {
 
       {/* Timer Modal */}
       {isPlaying && currentExercise && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
+        <div className="fixed inset-0 bg-opacity-75 flex items-center justify-center z-50">
           <div className="bg-white p-4 rounded-lg shadow-lg text-center max-w-sm w-full">
-            <h2 className="text-xl font-bold mb-4">{currentExercise.name}</h2>
-            <p className="text-lg font-semibold mb-4">
+            <h2 className="text-xl font-bold mb-4 text-teal-600">{currentExercise.name}</h2>
+            <p className="text-lg font-semibold mb-4 text-teal-700">
               Time Remaining: {Math.floor(timer / 60)}:
               {timer % 60 < 10 ? `0${timer % 60}` : timer % 60}
             </p>
@@ -186,41 +186,41 @@ export default function Exercise() {
 
       {/* Add/Edit Modal */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
-            <h2 className="text-xl font-bold mb-4">
+        <div className="fixed inset-0  bg-opacity-75 flex items-center justify-center z-50">
+          <div className="bg-[#F5F5F5] p-8 rounded-lg shadow-lg max-w-sm w-full">
+            <h2 className="text-xl font-bold mb-6 text-teal-600">
               {modalType === "add" ? "Add Exercise" : "Edit Exercise"}
             </h2>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Name</label>
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-teal-700">Name</label>
               <input
                 type="text"
                 value={modalExercise.name}
                 onChange={(e) => setModalExercise({ ...modalExercise, name: e.target.value })}
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="mt-2 block w-full border-teal-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-2"
               />
             </div>
-            <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-700">Duration (minutes)</label>
+            <div className="mb-6">
+              <label className="block text-sm font-medium text-teal-700">Duration (minutes)</label>
               <input
                 type="number"
                 value={modalExercise.duration}
                 onChange={(e) =>
                   setModalExercise({ ...modalExercise, duration: parseInt(e.target.value) || 0 })
                 }
-                className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                className="mt-2 block w-full border-teal-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-2"
               />
             </div>
-            <div className="flex justify-end gap-2">
+            <div className="flex justify-end gap-4">
               <button
                 onClick={closeModal}
-                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition"
+                className="bg-teal-400 text-white px-4 py-2 rounded hover:bg-teal-500 transition"
               >
                 Cancel
               </button>
               <button
                 onClick={handleModalSubmit}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                className="bg-teal-600 text-white px-4 py-2 rounded hover:bg-teal-700 transition"
               >
                 Save
               </button>
