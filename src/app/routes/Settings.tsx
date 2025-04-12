@@ -58,11 +58,11 @@ export default function Settings() {
     value: number;
     onChange: (value: number) => void;
   }> = ({ options, value, onChange }) => {
-    const handleOptionClick = (option: number) => {
+    const handleOptionClick = (event: React.MouseEvent, option: number) => {
+      event.preventDefault();
       if (value !== option) {
-        // Trigger vibration when the value changes
         if (navigator.vibrate) {
-          navigator.vibrate(50); // Vibrate for 50ms
+          navigator.vibrate(50);
         }
         onChange(option);
       }
@@ -76,7 +76,7 @@ export default function Settings() {
             className={`snap-center text-center py-2 cursor-pointer ${
               value === option ? "text-black font-bold text-lg" : "text-gray-500"
             }`}
-            onClick={() => handleOptionClick(option)}
+            onClick={(event) => handleOptionClick(event, option)} // Pass the event to the handler
           >
             {option}
           </div>

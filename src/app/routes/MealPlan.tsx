@@ -13,10 +13,18 @@ import { db } from "../../firebase/firebase";
 import useAuth from "../../contexts/auth/useAuth";
 import { deleteMealPlan } from "../../firebase/db/deleteMealPlan";
 
+interface MealPlan {
+  id: string;
+  name: string;
+  description: string;
+  calories: number;
+}
+
 export default function MealPlan() {
   const { user } = useAuth();
-  const [mealPlans, setMealPlans] = useState([]);
+  const [mealPlans, setMealPlans] = useState<MealPlan[]>([]); // Explicitly define the type
   const navigate = useNavigate();
+
   useEffect(() => {
     const fetchMealPlans = async () => {
       if (!user) return;
@@ -28,7 +36,7 @@ export default function MealPlan() {
         const plans = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
-        }));
+        })) as MealPlan[]; // Type assertion to ensure TypeScript knows the structure
         setMealPlans(plans);
       } catch (error) {
         console.error("Error fetching meal plans:", error);
@@ -38,7 +46,7 @@ export default function MealPlan() {
     fetchMealPlans();
   }, [user]);
 
-  const handleAssignMealPlan = async (mealPlanId: string, calories: number) => {
+  const handleAssignMealPlan = async (_mealPlanId: string, calories: number) => {
     if (!user) return;
 
     try {

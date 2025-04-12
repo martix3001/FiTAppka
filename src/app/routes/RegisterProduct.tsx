@@ -1,13 +1,32 @@
 import { useEffect, useState } from "react";
-import { collection, getDocs, updateDoc, increment, doc } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  updateDoc,
+  increment,
+  doc,
+} from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import { addProduce } from "../../firebase/db/addProduce";
 import useAuth from "../../contexts/auth/useAuth";
 
+// Define the type for a product
+interface Product {
+  id: string;
+  name: string;
+  calories: number;
+  fat: number;
+  carbohydrates: number;
+  sugar: number;
+  protein: number;
+  salt: number;
+  fiber: number;
+}
+
 export default function RegisterProduct() {
   const { user } = useAuth();
-  const [products, setProducts] = useState([]);
-  const [newProduct, setNewProduct] = useState({
+  const [products, setProducts] = useState<Product[]>([]); // Explicitly define the type
+  const [newProduct, setNewProduct] = useState<Omit<Product, "id">>({
     name: "",
     calories: 0,
     fat: 0,
@@ -26,7 +45,7 @@ export default function RegisterProduct() {
         const productList = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
-        }));
+        })) as Product[]; // Type assertion to ensure TypeScript knows the structure
         setProducts(productList);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -42,7 +61,10 @@ export default function RegisterProduct() {
 
     try {
       await addProduce(newProduct);
-      setProducts((prev) => [...prev, newProduct]);
+      setProducts((prev) => [
+        ...prev,
+        { id: crypto.randomUUID(), ...newProduct },
+      ]); // Add the new product with a generated ID
       setNewProduct({
         name: "",
         calories: 0,
@@ -77,7 +99,9 @@ export default function RegisterProduct() {
       <div className="overflow-y-scroll h-64 border p-4 rounded mb-4">
         <form onSubmit={handleAddProduct} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Product Name</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Product Name
+            </label>
             <input
               type="text"
               value={newProduct.name}
@@ -88,7 +112,9 @@ export default function RegisterProduct() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Calories</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Calories
+            </label>
             <input
               type="number"
               value={newProduct.calories}
@@ -102,7 +128,9 @@ export default function RegisterProduct() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Fat</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Fat
+            </label>
             <input
               type="number"
               value={newProduct.fat}
@@ -116,7 +144,9 @@ export default function RegisterProduct() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Carbohydrates</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Carbohydrates
+            </label>
             <input
               type="number"
               value={newProduct.carbohydrates}
@@ -130,7 +160,9 @@ export default function RegisterProduct() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Sugar</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Sugar
+            </label>
             <input
               type="number"
               value={newProduct.sugar}
@@ -144,7 +176,9 @@ export default function RegisterProduct() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Protein</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Protein
+            </label>
             <input
               type="number"
               value={newProduct.protein}
@@ -158,7 +192,9 @@ export default function RegisterProduct() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Salt</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Salt
+            </label>
             <input
               type="number"
               value={newProduct.salt}
@@ -172,7 +208,9 @@ export default function RegisterProduct() {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Fiber</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Fiber
+            </label>
             <input
               type="number"
               value={newProduct.fiber}

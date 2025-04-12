@@ -11,10 +11,20 @@ import { db } from "../../firebase/firebase";
 import useAuth from "../../contexts/auth/useAuth";
 import { useNavigate } from "react-router";
 
+// Define the type for a product
+interface Product {
+  id: string;
+  name: string;
+  calories: number;
+}
+
 export default function Product() {
   const { user } = useAuth();
-  const [products, setProducts] = useState([]);
-  const [newProduct, setNewProduct] = useState({ name: "", calories: 0 });
+  const [products, setProducts] = useState<Product[]>([]); // Explicitly define the type
+  const [newProduct, setNewProduct] = useState<Omit<Product, "id">>({
+    name: "",
+    calories: 0,
+  }); // Define the type for newProduct without the "id" field
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,7 +35,7 @@ export default function Product() {
         const productList = snapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
-        }));
+        })) as Product[]; // Type assertion to ensure TypeScript knows the structure
         setProducts(productList);
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -41,15 +51,15 @@ export default function Product() {
 
     try {
       const productRef = collection(db, "products");
-      await addDoc(productRef, newProduct);
-      setProducts((prev) => [...prev, newProduct]);
+      const docRef = await addDoc(productRef, newProduct);
+      setProducts((prev) => [...prev, { id: docRef.id, ...newProduct }]); // Add the new product with its ID
       setNewProduct({ name: "", calories: 0 });
     } catch (error) {
       console.error("Error adding product:", error);
     }
   };
 
-  const handleAddCalories = async (productId: string, calories: number) => {
+  const handleAddCalories = async (_productId: string, calories: number) => {
     if (!user) return;
 
     try {

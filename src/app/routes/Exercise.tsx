@@ -1,18 +1,37 @@
 import { useState, useEffect } from "react";
 import { Outlet } from "react-router";
-import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  query,
+  where,
+} from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import useAuth from "../../contexts/auth/useAuth";
 
 export default function Exercise() {
   const { user } = useAuth();
-  const [exercises, setExercises] = useState<{ id: string; name: string; duration: number }[]>([]);
+  const [exercises, setExercises] = useState<
+    { id: string; name: string; duration: number }[]
+  >([]);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentExercise, setCurrentExercise] = useState<{ id: string; name: string; duration: number } | null>(null);
+  const [currentExercise, setCurrentExercise] = useState<{
+    id: string;
+    name: string;
+    duration: number;
+  } | null>(null);
   const [timer, setTimer] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalType, setModalType] = useState<"add" | "edit">("add");
-  const [modalExercise, setModalExercise] = useState<{ id?: string; name: string; duration: number }>({
+  const [modalExercise, setModalExercise] = useState<{
+    id?: string;
+    name: string;
+    duration: number;
+  }>({
     name: "",
     duration: 0,
   });
@@ -57,7 +76,10 @@ export default function Exercise() {
     }
   };
 
-  const handleEditExercise = async (id: string, updatedExercise: { name: string; duration: number }) => {
+  const handleEditExercise = async (
+    id: string,
+    updatedExercise: { name: string; duration: number }
+  ) => {
     if (!updatedExercise.name || updatedExercise.duration <= 0) {
       alert("Please provide valid exercise details.");
       return;
@@ -67,7 +89,9 @@ export default function Exercise() {
       const exerciseRef = doc(db, "exercises", id);
       await updateDoc(exerciseRef, updatedExercise);
       setExercises((prev) =>
-        prev.map((exercise) => (exercise.id === id ? { ...exercise, ...updatedExercise } : exercise))
+        prev.map((exercise) =>
+          exercise.id === id ? { ...exercise, ...updatedExercise } : exercise
+        )
       );
     } catch (error) {
       console.error("Error editing exercise:", error);
@@ -83,7 +107,11 @@ export default function Exercise() {
     }
   };
 
-  const handlePlayExercise = (exercise: { id: string; name: string; duration: number }) => {
+  const handlePlayExercise = (exercise: {
+    id: string;
+    name: string;
+    duration: number;
+  }) => {
     setCurrentExercise(exercise);
     setTimer(exercise.duration * 60);
     setIsPlaying(true);
@@ -107,7 +135,10 @@ export default function Exercise() {
     return () => clearInterval(interval);
   }, [isPlaying, timer]);
 
-  const openModal = (type: "add" | "edit", exercise?: { id: string; name: string; duration: number }) => {
+  const openModal = (
+    type: "add" | "edit",
+    exercise?: { id: string; name: string; duration: number }
+  ) => {
     setModalType(type);
     setModalExercise(exercise || { name: "", duration: 0 });
     setIsModalOpen(true);
@@ -122,7 +153,10 @@ export default function Exercise() {
     if (modalType === "add") {
       handleAddExercise(modalExercise.name, modalExercise.duration);
     } else if (modalType === "edit" && modalExercise.id) {
-      handleEditExercise(modalExercise.id, { name: modalExercise.name, duration: modalExercise.duration });
+      handleEditExercise(modalExercise.id, {
+        name: modalExercise.name,
+        duration: modalExercise.duration,
+      });
     }
     closeModal();
   };
@@ -143,8 +177,12 @@ export default function Exercise() {
             className="p-4 border rounded shadow flex justify-between items-center bg-white"
           >
             <div>
-              <h2 className="text-lg font-semibold text-teal-700">{exercise.name}</h2>
-              <p className="text-sm text-teal-600">Duration: {exercise.duration} min</p>
+              <h2 className="text-lg font-semibold text-teal-700">
+                {exercise.name}
+              </h2>
+              <p className="text-sm text-teal-600">
+                Duration: {exercise.duration} min
+              </p>
             </div>
             <div className="flex gap-2">
               <button
@@ -174,7 +212,9 @@ export default function Exercise() {
       {isPlaying && currentExercise && (
         <div className="fixed inset-0 bg-opacity-75 flex items-center justify-center z-50">
           <div className="bg-white p-4 rounded-lg shadow-lg text-center max-w-sm w-full">
-            <h2 className="text-xl font-bold mb-4 text-teal-600">{currentExercise.name}</h2>
+            <h2 className="text-xl font-bold mb-4 text-teal-600">
+              {currentExercise.name}
+            </h2>
             <p className="text-lg font-semibold mb-4 text-teal-700">
               Time Remaining: {Math.floor(timer / 60)}:
               {timer % 60 < 10 ? `0${timer % 60}` : timer % 60}
@@ -197,21 +237,30 @@ export default function Exercise() {
               {modalType === "add" ? "Add Exercise" : "Edit Exercise"}
             </h2>
             <div className="mb-6">
-              <label className="block text-sm font-medium text-teal-700">Name</label>
+              <label className="block text-sm font-medium text-teal-700">
+                Name
+              </label>
               <input
                 type="text"
                 value={modalExercise.name}
-                onChange={(e) => setModalExercise({ ...modalExercise, name: e.target.value })}
+                onChange={(e) =>
+                  setModalExercise({ ...modalExercise, name: e.target.value })
+                }
                 className="mt-2 block w-full border-teal-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-2"
               />
             </div>
             <div className="mb-6">
-              <label className="block text-sm font-medium text-teal-700">Duration (minutes)</label>
+              <label className="block text-sm font-medium text-teal-700">
+                Duration (minutes)
+              </label>
               <input
                 type="number"
                 value={modalExercise.duration}
                 onChange={(e) =>
-                  setModalExercise({ ...modalExercise, duration: parseInt(e.target.value) || 0 })
+                  setModalExercise({
+                    ...modalExercise,
+                    duration: parseInt(e.target.value) || 0,
+                  })
                 }
                 className="mt-2 block w-full border-teal-300 rounded-md shadow-sm focus:ring-teal-500 focus:border-teal-500 sm:text-sm p-2"
               />
