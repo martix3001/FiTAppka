@@ -7,14 +7,15 @@ export default function MealPlanAdd() {
   const { user } = useAuth();
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const navigate = useNavigate(); // Initialize the navigate function
+  const [calories, setCalories] = useState(0); // New calories field
+  const navigate = useNavigate();
 
   const handleCreateMealPlan = async () => {
     if (!user) return;
 
     try {
-      await createMealPlan(user.uid, name, description); // Pass userId
-      navigate("/dashboard/meal-plan"); // Navigate to /meal-plan after success
+      await createMealPlan(user.uid, name, description, calories); // Pass calories
+      navigate("/dashboard/meal-plan");
     } catch (error) {
       console.error("Error creating meal plan:", error);
     }
@@ -35,6 +36,13 @@ export default function MealPlanAdd() {
           placeholder="Short Description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          className="w-full p-2 border rounded"
+        />
+        <input
+          type="number"
+          placeholder="Calories"
+          value={calories}
+          onChange={(e) => setCalories(Number(e.target.value))}
           className="w-full p-2 border rounded"
         />
         <button

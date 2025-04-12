@@ -43,9 +43,10 @@ export async function createUserDatabase(
  * @param userId - The ID of the user creating the meal plan.
  * @param name - The name of the meal plan.
  * @param description - A short description of the meal plan.
+ * @param calories - The calorie value of the meal plan.
  * @returns A promise that resolves with the created meal plan's ID.
  */
-export async function createMealPlan(userId: string, name: string, description: string) {
+export async function createMealPlan(userId: string, name: string, description: string, calories: number) {
   if (!userId) {
     throw new Error("User ID is required to create a meal plan.");
   }
@@ -53,9 +54,10 @@ export async function createMealPlan(userId: string, name: string, description: 
   try {
     const mealPlanRef = collection(db, "mealPlans");
     const docRef = await addDoc(mealPlanRef, {
-      userId, // Associate the meal plan with the user
+      userId,
       name,
       description,
+      calories, // Add calories field
       createdAt: new Date().toISOString(),
     });
     console.log(`Meal plan created with ID: ${docRef.id}`);

@@ -1,5 +1,5 @@
 import { doc, getDoc } from "firebase/firestore";
-import { Droplet, Pizza, Footprints, Plus, Users, Camera } from "lucide-react";
+import { Droplet, Pizza, Footprints, Plus, Users, Camera, Dumbbell } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import ActionTile from "../../components/ActionTile";
@@ -48,7 +48,7 @@ export default function Home() {
       <div className="flex flex-col gap-12 p-4">
         {/* Water Progress */}
         <div className="flex items-center gap-4">
-          <Droplet size={40} color="grey"/>
+          <Droplet size={40} color="grey" />
           <div className="flex-1 bg-gray-200 rounded-full h-6 relative">
             <div
               className="bg-blue-500 h-6 rounded-full"
@@ -66,7 +66,7 @@ export default function Home() {
 
         {/* Meal Progress */}
         <div className="flex items-center gap-4">
-          <Pizza size={40} color="grey"/>
+          <Pizza size={40} color="grey" />
           <div className="flex-1 bg-gray-200 rounded-full h-6 relative">
             <div
               className="bg-green-500 h-6 rounded-full"
@@ -84,7 +84,7 @@ export default function Home() {
 
         {/* Steps Progress */}
         <div className="flex items-center gap-4">
-          <Footprints size={40} color="grey"/>
+          <Footprints size={40} color="grey" />
           <div className="flex-1 bg-gray-200 rounded-full h-6 relative">
             <div
               className="bg-yellow-500 h-6 rounded-full"
@@ -127,6 +127,11 @@ export default function Home() {
           icon={<Camera color="black" size={30} className="self-center" />}
           label={"Progress Gallery"}
           onClick={() => navigate("/dashboard/progress-gallery")}
+        />
+        <ActionTile
+          icon={<Dumbbell />}
+          label={"Excercises"}
+          onClick={() => navigate("/dashboard/exercise")}
         />
         <ActionTile
           icon={""}

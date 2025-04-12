@@ -1,15 +1,22 @@
-import { NavLink, Outlet } from "react-router";
+import { NavLink, Outlet, useNavigate } from "react-router";
 import { useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  doc,
+  updateDoc,
+  increment,
+} from "firebase/firestore";
 import { db } from "../../firebase/firebase";
 import useAuth from "../../contexts/auth/useAuth";
-import { assignMealPlanToUser } from "../../firebase/db/createUserDatabase";
 import { deleteMealPlan } from "../../firebase/db/deleteMealPlan";
 
 export default function MealPlan() {
   const { user } = useAuth();
   const [mealPlans, setMealPlans] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchMealPlans = async () => {
       if (!user) return;
@@ -31,11 +38,16 @@ export default function MealPlan() {
     fetchMealPlans();
   }, [user]);
 
-  const handleAssignMealPlan = async (mealPlanId: string) => {
+  const handleAssignMealPlan = async (mealPlanId: string, calories: number) => {
     if (!user) return;
+
     try {
-      await assignMealPlanToUser(user.uid, mealPlanId);
-      alert("Meal plan assigned successfully!");
+      // Add calories to the user's current calories
+      const userDocRef = doc(db, "users", user.uid);
+      await updateDoc(userDocRef, {
+        calories: increment(calories),
+      });
+      navigate("/dashboard");
     } catch (error) {
       console.error("Error assigning meal plan:", error);
     }
@@ -44,7 +56,9 @@ export default function MealPlan() {
   const handleDeleteMealPlan = async (mealPlanId: string) => {
     try {
       await deleteMealPlan(mealPlanId);
-      setMealPlans((prevPlans) => prevPlans.filter((plan) => plan.id !== mealPlanId));
+      setMealPlans((prevPlans) =>
+        prevPlans.filter((plan) => plan.id !== mealPlanId)
+      );
     } catch (error) {
       console.error("Error deleting meal plan:", error);
     }
@@ -65,10 +79,11 @@ export default function MealPlan() {
             <div>
               <h2 className="text-lg font-semibold">{plan.name}</h2>
               <p className="text-sm text-gray-600">{plan.description}</p>
+              <p className="text-sm text-gray-600">Calories: {plan.calories}</p>
             </div>
             <div className="flex gap-2">
               <button
-                onClick={() => handleAssignMealPlan(plan.id)}
+                onClick={() => handleAssignMealPlan(plan.id, plan.calories)}
                 className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
               >
                 Add
