@@ -162,11 +162,6 @@ export default function Home() {
           label={"Excercises"}
           onClick={() => navigate("/dashboard/exercise")}
         />
-        <ActionTile
-          icon={""}
-          label={""}
-          onClick={() => navigate("/dashboard")}
-        />
       </div>
     </div>
   );
