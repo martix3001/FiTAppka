@@ -1,8 +1,8 @@
-import { Outlet, useNavigate } from "react-router";
+import { NavLink, Outlet, useNavigate } from "react-router";
 import useAuth from "../../contexts/auth/useAuth";
 import { logoutUser } from "../../firebase/auth/logoutUser";
 import PWABadge from "../../components/PWABadge";
-import { UserRoundCog } from "lucide-react";
+import { ChevronLeft, UserRoundCog } from "lucide-react";
 
 export default function DashboardLayout() {
   const { user } = useAuth();
@@ -41,6 +41,11 @@ export default function DashboardLayout() {
             color="white"
           />
         </div>
+      </div>
+      <div className="mt-5 ml-5">
+        <NavLink to={"/"}>
+          <ChevronLeft size={50} color="grey"/>
+        </NavLink>
       </div>
 
       {/* <header className="bg-gray-800 text-white p-4 flex justify-between items-center">
