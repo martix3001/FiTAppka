@@ -6,7 +6,7 @@ import FormLabel from "@mui/joy/FormLabel";
 import Input from "@mui/joy/Input";
 import Button from "@mui/joy/Button";
 import { useState, useEffect } from "react";
-import { signInUser } from "../../../../firebase/auth/signIn";
+import { signInUser, signInWithGoogle } from "../../../../firebase/auth/signIn";
 import { NavLink, useNavigate } from "react-router";
 import useAuth from "../../../../contexts/auth/useAuth";
 
@@ -27,7 +27,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const user = await signInUser(email, password);
-      setMessage(`User created successfully: ${user.email}`);
+      setMessage(`User logged in successfully: ${user.email}`);
     } catch (error: unknown) {
       if (error instanceof Error) {
         setMessage(`Error: ${error.message}`);
@@ -36,6 +36,21 @@ export default function Login() {
       }
     }
   };
+
+  const handleGoogleLogin = async () => {
+    try {
+      const user = await signInWithGoogle();
+      setMessage(`Logged in as: ${user.displayName}`);
+      navigate("/");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        setMessage(`Error: ${error.message}`);
+      } else {
+        setMessage("An unknown error occurred.");
+      }
+    }
+  };
+
   return (
     <>
       <CssVarsProvider>
@@ -82,6 +97,13 @@ export default function Login() {
           </FormControl>
           <Button sx={{ mt: 1 }} onClick={handleSubmit}>
             Log in
+          </Button>
+          <Button
+            sx={{ mt: 1 }}
+            onClick={handleGoogleLogin}
+            className="bg-red-500 text-white"
+          >
+            Log in with Google
           </Button>
           <Typography
             endDecorator={
