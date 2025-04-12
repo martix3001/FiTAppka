@@ -21,8 +21,7 @@ export default function Home() {
     const fetchData = async () => {
       if (user) {
         try {
-          const userId = user.uid; // Replace with actual user ID
-          const userDocRef = doc(db, "users", userId);
+          const userDocRef = doc(db, "users", user.uid);
           const userDoc = await getDoc(userDocRef);
 
           if (userDoc.exists()) {
@@ -40,7 +39,37 @@ export default function Home() {
     };
 
     fetchData();
-  });
+  }, [user]);
+
+  useEffect(() => {
+    let stepCount = 0;
+
+    const handleMotion = (event: DeviceMotionEvent) => {
+      const acceleration = event.accelerationIncludingGravity;
+      if (acceleration) {
+        const totalAcceleration =
+          Math.abs(acceleration.x || 0) +
+          Math.abs(acceleration.y || 0) +
+          Math.abs(acceleration.z || 0);
+
+        // Simple threshold to detect steps
+        if (totalAcceleration > 15) {
+          stepCount++;
+          setStepsProgress((prev) => Math.min(prev + 1, stepsMax));
+        }
+      }
+    };
+
+    if (window.DeviceMotionEvent) {
+      window.addEventListener("devicemotion", handleMotion);
+    } else {
+      console.error("DeviceMotionEvent is not supported on this device.");
+    }
+
+    return () => {
+      window.removeEventListener("devicemotion", handleMotion);
+    };
+  }, [stepsMax]);
 
   return (
     <div className="flex flex-col h-svh gap-15 mt-10">
