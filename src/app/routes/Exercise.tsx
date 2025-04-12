@@ -17,14 +17,13 @@ export default function Exercise() {
     duration: 0,
   });
 
-  // Fetch exercises from Firestore
   useEffect(() => {
     const fetchExercises = async () => {
       if (!user) return;
 
       try {
         const exerciseRef = collection(db, "exercises");
-        const q = query(exerciseRef, where("userId", "==", user.uid)); // Fetch only the user's exercises
+        const q = query(exerciseRef, where("userId", "==", user.uid));
         const snapshot = await getDocs(q);
         const exerciseList = snapshot.docs.map((doc) => {
           const data = doc.data() as { name: string; duration: number };
@@ -86,19 +85,25 @@ export default function Exercise() {
 
   const handlePlayExercise = (exercise: { id: string; name: string; duration: number }) => {
     setCurrentExercise(exercise);
-    setTimer(exercise.duration * 60); // Convert minutes to seconds
+    setTimer(exercise.duration * 60);
     setIsPlaying(true);
   };
 
   useEffect(() => {
     let interval: NodeJS.Timeout | undefined;
+
     if (isPlaying && timer > 0) {
       interval = setInterval(() => {
         setTimer((prev) => prev - 1);
       }, 1000);
-    } else if (timer === 0) {
+    } else if (isPlaying && timer === 0) {
+      if ("vibrate" in navigator) {
+        navigator.vibrate(1000);
+      }
       setIsPlaying(false);
+      setCurrentExercise(null);
     }
+
     return () => clearInterval(interval);
   }, [isPlaying, timer]);
 
