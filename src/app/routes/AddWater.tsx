@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { ChevronLeft, GlassWater } from "lucide-react";
-import { NavLink, useNavigate } from "react-router";
+import { GlassWater } from "lucide-react";
+import { useNavigate } from "react-router";
 import { addWater } from "../../firebase/db/addWater";
 import useAuth from "../../contexts/auth/useAuth";
 

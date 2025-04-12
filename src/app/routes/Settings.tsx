@@ -5,8 +5,8 @@ import { updateUserData } from "../../firebase/db/updateUserData";
 import { getUserData } from "../../firebase/db/getUserData";
 
 export default function Settings() {
-  const [weight, setWeight] = useState<number | null>(null); 
-  const [height, setHeight] = useState<number | null>(null); 
+  const [weight, setWeight] = useState<number | null>(null);
+  const [height, setHeight] = useState<number | null>(null);
   const [isEditingWeight, setIsEditingWeight] = useState(false);
   const [isEditingHeight, setIsEditingHeight] = useState(false);
   const navigate = useNavigate();
@@ -16,10 +16,10 @@ export default function Settings() {
     const fetchData = async () => {
       if (user) {
         try {
-          const data = await getUserData(user.uid); 
+          const data = await getUserData(user.uid);
           if (data) {
-            setWeight(data.weight || 0); 
-            setHeight(data.height || 0); 
+            setWeight(data.weight || 0);
+            setHeight(data.height || 0);
           }
         } catch (error) {
           console.error("Error fetching user data:", error);
@@ -58,6 +58,16 @@ export default function Settings() {
     value: number;
     onChange: (value: number) => void;
   }> = ({ options, value, onChange }) => {
+    const handleOptionClick = (option: number) => {
+      if (value !== option) {
+        // Trigger vibration when the value changes
+        if (navigator.vibrate) {
+          navigator.vibrate(50); // Vibrate for 50ms
+        }
+        onChange(option);
+      }
+    };
+
     return (
       <div className="h-40 w-24 overflow-y-scroll snap-y snap-mandatory scrollbar-hide border rounded-lg">
         {options.map((option) => (
@@ -66,7 +76,7 @@ export default function Settings() {
             className={`snap-center text-center py-2 cursor-pointer ${
               value === option ? "text-black font-bold text-lg" : "text-gray-500"
             }`}
-            onClick={() => onChange(option)}
+            onClick={() => handleOptionClick(option)}
           >
             {option}
           </div>
@@ -76,7 +86,7 @@ export default function Settings() {
   };
 
   if (weight === null || height === null) {
-    return <div>Loading...</div>; 
+    return <div>Loading...</div>;
   }
 
   return (
