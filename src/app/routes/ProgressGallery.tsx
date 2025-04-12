@@ -7,14 +7,14 @@ interface PhotoDetails {
 }
 
 export default function ProgressGallery() {
-  const [photos, setPhotos] = useState<PhotoDetails[]>([]); // Array to store photo details
-  const [selectedPhoto, setSelectedPhoto] = useState<PhotoDetails | null>(null); // For expanded photo view
+  const [photos, setPhotos] = useState<PhotoDetails[]>([]); 
+  const [selectedPhoto, setSelectedPhoto] = useState<PhotoDetails | null>(null); 
   const maxPhotos = 9;
 
   const handleAddPhoto = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       const file = event.target.files[0];
-      const newPhotoUrl = URL.createObjectURL(file); // Create a URL for the captured image
+      const newPhotoUrl = URL.createObjectURL(file); 
 
       if (photos.length < maxPhotos) {
         const today = new Date();
@@ -24,7 +24,8 @@ export default function ProgressGallery() {
           month: "long",
           day: "numeric",
         });
-
+        //CHANGE THIS TO GET THE WEIGHT FROM THE USER
+        // For now, we will use a static value for the weight
         const userWeight = "70kg";
 
         const newPhoto: PhotoDetails = {
@@ -33,7 +34,6 @@ export default function ProgressGallery() {
           weight: userWeight,
         };
 
-        // Add the photo to the gallery
         setPhotos([newPhoto, ...photos]);
       } else {
         alert("Maximum of 9 photos reached.");
@@ -52,42 +52,36 @@ export default function ProgressGallery() {
       image.src = selectedPhoto.url;
   
       image.onload = () => {
-        // Set canvas dimensions to match the image
         canvas.width = image.width;
         canvas.height = image.height;
-  
-        // Draw the image onto the canvas
         context.drawImage(image, 0, 0);
   
-        // Calculate dimensions for the text box and font size
-        const boxHeight = canvas.height * 0.08; // 8% of the image height
-        const boxWidth = canvas.width * 0.4; // 40% of the image width
-        const fontSize = Math.floor(canvas.height * 0.04); // 4% of the image height
+        const boxHeight = canvas.height * 0.08; 
+        const boxWidth = canvas.width * 0.4; 
+        const fontSize = Math.floor(canvas.height * 0.04);
   
-        // Add text overlay
-        context.fillStyle = "rgba(0, 0, 0, 0.5)"; // Semi-transparent black background
+        context.fillStyle = "rgba(0, 0, 0, 0.5)";
         context.fillRect(
-          canvas.width - boxWidth - 10, // Position box in the bottom-right corner
+          canvas.width - boxWidth - 10,
           canvas.height - boxHeight - 10,
           boxWidth,
           boxHeight
         );
   
-        context.fillStyle = "white"; // Text color
-        context.font = `${fontSize}px Arial`; // Dynamically set font size
+        context.fillStyle = "white"; 
+        context.font = `${fontSize}px Arial`;
         context.textAlign = "right";
         context.fillText(
           selectedPhoto.date,
-          canvas.width - 15, // Padding from the right edge
-          canvas.height - boxHeight + fontSize / 2 - 15 // Adjust vertical alignment
+          canvas.width - 15, 
+          canvas.height - boxHeight + fontSize / 2 - 15 
         );
         context.fillText(
           `Weight: ${selectedPhoto.weight}`,
-          canvas.width - 15, // Padding from the right edge
-          canvas.height - 15 // Padding from the bottom edge
+          canvas.width - 15, 
+          canvas.height - 15 
         );
   
-        // Convert canvas to a data URL and trigger download
         const modifiedPhotoUrl = canvas.toDataURL("image/jpeg");
         const link = document.createElement("a");
         link.href = modifiedPhotoUrl;
@@ -96,23 +90,18 @@ export default function ProgressGallery() {
         link.click();
         document.body.removeChild(link);
   
-        // Close the expanded photo view
         setSelectedPhoto(null);
       };
     }
   };
 
   const handleCloseDetails = () => {
-    setSelectedPhoto(null); // Close the expanded photo view
+    setSelectedPhoto(null);
   };
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4 gap-4">
-      {/* Header */}
-      <header className="bg-teal-500 w-full py-4 text-center">
-        <h1 className="text-white text-lg font-bold">Fit App - Progress Gallery</h1>
-      </header>
-
+     
       {/* Photo Grid */}
       <div className="grid grid-cols-3 gap-2 w-full max-w-sm">
         {Array.from({ length: maxPhotos }).map((_, index) => (
@@ -138,14 +127,13 @@ export default function ProgressGallery() {
         ))}
       </div>
 
-      {/* Add Photo Button */}
       <div className="fixed bottom-8 right-8">
         <input
           accept="image/*"
           className="hidden"
           id="camera-input"
           type="file"
-          capture="environment" // Opens the camera on mobile devices
+          capture="environment" 
           onChange={handleAddPhoto}
         />
         <label htmlFor="camera-input">
