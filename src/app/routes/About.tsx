@@ -1,14 +1,8 @@
-import { ChevronLeft, Info, User } from "lucide-react";
-import { NavLink } from "react-router";
+import { Info, User } from "lucide-react";
 
 export default function About() {
   return (
     <div>
-      <div className="mt-5 ml-5">
-        <NavLink to={"/"}>
-          <ChevronLeft size={50}/>
-        </NavLink>
-      </div>
       <div className="flex flex-col p-6 h-full">
         <div className="flex items-center gap-4 mb-6">
           <User color="black" size={100} />

@@ -42,7 +42,7 @@ export default function DashboardLayout() {
           />
         </div>
       </div>
-      <div className="mt-5 ml-5">
+      <div className="mt-3 ml-3">
         <NavLink to={"/"}>
           <ChevronLeft size={50} color="grey"/>
         </NavLink>
@@ -105,10 +105,9 @@ export default function DashboardLayout() {
       </nav> */}
 
       {/* Main Content */}
-      <main className="">
+      <main>
         <Outlet />
       </main>
-
       <PWABadge />
     </div>
   );

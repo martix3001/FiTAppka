@@ -43,9 +43,9 @@ export default function Home() {
   });
 
   return (
-    <div className="flex flex-col h-svh justify-around">
+    <div className="flex flex-col h-svh gap-15 mt-10">
       {/* Progress Bars Container */}
-      <div className="flex flex-col gap-12  p-4">
+      <div className="flex flex-col gap-12 p-4">
         {/* Water Progress */}
         <div className="flex items-center gap-4">
           <Droplet size={40} color="grey"/>
@@ -102,7 +102,7 @@ export default function Home() {
       </div>
 
       {/* Feature Buttons Container */}
-      <div className="flex flex-wrap justify-center items-center gap-6 py-4 bg-gray-100">
+      <div className="flex flex-wrap justify-center items-center gap-6 bg-gray-100">
         <ActionTile
           icon={<Plus color="black" size={30} className="self-center" />}
           label={"Meal plan"}
