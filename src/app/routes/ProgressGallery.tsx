@@ -121,7 +121,7 @@ export default function ProgressGallery() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4 gap-4">
+    <div className="flex flex-col items-center mt-20 min-h-screen bg-gray-100 px-4 gap-4">
       {/* Photo Grid */}
       <div className="grid grid-cols-3 gap-2 w-full max-w-sm">
         {Array.from({ length: maxPhotos }).map((_, index) => (

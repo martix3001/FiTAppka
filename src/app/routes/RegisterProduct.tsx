@@ -74,107 +74,125 @@ export default function RegisterProduct() {
   return (
     <div className="p-4">
       <h1 className="text-2xl font-bold mb-4">Register Product Page</h1>
-      <form onSubmit={handleAddProduct} className="mb-4 space-y-2">
-        <input
-          type="text"
-          placeholder="Product Name"
-          value={newProduct.name}
-          onChange={(e) =>
-            setNewProduct((prev) => ({ ...prev, name: e.target.value }))
-          }
-          className="border p-2 rounded w-full"
-        />
-        <input
-          type="number"
-          placeholder="Calories"
-          value={newProduct.calories}
-          onChange={(e) =>
-            setNewProduct((prev) => ({
-              ...prev,
-              calories: parseFloat(e.target.value) || 0,
-            }))
-          }
-          className="border p-2 rounded w-full"
-        />
-        <input
-          type="number"
-          placeholder="Fat"
-          value={newProduct.fat}
-          onChange={(e) =>
-            setNewProduct((prev) => ({
-              ...prev,
-              fat: parseFloat(e.target.value) || 0,
-            }))
-          }
-          className="border p-2 rounded w-full"
-        />
-        <input
-          type="number"
-          placeholder="Carbohydrates"
-          value={newProduct.carbohydrates}
-          onChange={(e) =>
-            setNewProduct((prev) => ({
-              ...prev,
-              carbohydrates: parseFloat(e.target.value) || 0,
-            }))
-          }
-          className="border p-2 rounded w-full"
-        />
-        <input
-          type="number"
-          placeholder="Sugar"
-          value={newProduct.sugar}
-          onChange={(e) =>
-            setNewProduct((prev) => ({
-              ...prev,
-              sugar: parseFloat(e.target.value) || 0,
-            }))
-          }
-          className="border p-2 rounded w-full"
-        />
-        <input
-          type="number"
-          placeholder="Protein"
-          value={newProduct.protein}
-          onChange={(e) =>
-            setNewProduct((prev) => ({
-              ...prev,
-              protein: parseFloat(e.target.value) || 0,
-            }))
-          }
-          className="border p-2 rounded w-full"
-        />
-        <input
-          type="number"
-          placeholder="Salt"
-          value={newProduct.salt}
-          onChange={(e) =>
-            setNewProduct((prev) => ({
-              ...prev,
-              salt: parseFloat(e.target.value) || 0,
-            }))
-          }
-          className="border p-2 rounded w-full"
-        />
-        <input
-          type="number"
-          placeholder="Fiber"
-          value={newProduct.fiber}
-          onChange={(e) =>
-            setNewProduct((prev) => ({
-              ...prev,
-              fiber: parseFloat(e.target.value) || 0,
-            }))
-          }
-          className="border p-2 rounded w-full"
-        />
-        <button
-          type="submit"
-          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition w-full"
-        >
-          Add Product
-        </button>
-      </form>
+      <div className="overflow-y-scroll h-64 border p-4 rounded mb-4">
+        <form onSubmit={handleAddProduct} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Product Name</label>
+            <input
+              type="text"
+              value={newProduct.name}
+              onChange={(e) =>
+                setNewProduct((prev) => ({ ...prev, name: e.target.value }))
+              }
+              className="border p-2 rounded w-full"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Calories</label>
+            <input
+              type="number"
+              value={newProduct.calories}
+              onChange={(e) =>
+                setNewProduct((prev) => ({
+                  ...prev,
+                  calories: parseFloat(e.target.value) || 0,
+                }))
+              }
+              className="border p-2 rounded w-full"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Fat</label>
+            <input
+              type="number"
+              value={newProduct.fat}
+              onChange={(e) =>
+                setNewProduct((prev) => ({
+                  ...prev,
+                  fat: parseFloat(e.target.value) || 0,
+                }))
+              }
+              className="border p-2 rounded w-full"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Carbohydrates</label>
+            <input
+              type="number"
+              value={newProduct.carbohydrates}
+              onChange={(e) =>
+                setNewProduct((prev) => ({
+                  ...prev,
+                  carbohydrates: parseFloat(e.target.value) || 0,
+                }))
+              }
+              className="border p-2 rounded w-full"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Sugar</label>
+            <input
+              type="number"
+              value={newProduct.sugar}
+              onChange={(e) =>
+                setNewProduct((prev) => ({
+                  ...prev,
+                  sugar: parseFloat(e.target.value) || 0,
+                }))
+              }
+              className="border p-2 rounded w-full"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Protein</label>
+            <input
+              type="number"
+              value={newProduct.protein}
+              onChange={(e) =>
+                setNewProduct((prev) => ({
+                  ...prev,
+                  protein: parseFloat(e.target.value) || 0,
+                }))
+              }
+              className="border p-2 rounded w-full"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Salt</label>
+            <input
+              type="number"
+              value={newProduct.salt}
+              onChange={(e) =>
+                setNewProduct((prev) => ({
+                  ...prev,
+                  salt: parseFloat(e.target.value) || 0,
+                }))
+              }
+              className="border p-2 rounded w-full"
+            />
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">Fiber</label>
+            <input
+              type="number"
+              value={newProduct.fiber}
+              onChange={(e) =>
+                setNewProduct((prev) => ({
+                  ...prev,
+                  fiber: parseFloat(e.target.value) || 0,
+                }))
+              }
+              className="border p-2 rounded w-full"
+            />
+          </div>
+          <button
+            type="submit"
+            className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition w-full"
+          >
+            Add Product
+          </button>
+        </form>
+      </div>
       <div className="overflow-y-scroll h-64 border p-4 rounded">
         {products.map((product) => (
           <div
